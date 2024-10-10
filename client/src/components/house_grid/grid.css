@@ -1,0 +1,244 @@
+main{
+    width: 100%;
+}
+
+.houses{
+    box-sizing: border-box;
+    padding: 0 45px;
+}
+
+.house_grid{
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 45px;
+}
+
+.house_grid .house__location_icon{
+    width: 2rem;
+    height: 2rem;
+}
+
+.house_grid .house__location_icon svg{
+    width: 100%;
+    height: 100%;
+}
+
+.house_grid > div{
+    width: 100%;
+    position: relative;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1;
+    cursor: pointer;
+}
+
+.house_grid > div > .house__images{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2;
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+}
+
+.house_grid > div > .house__images > img{
+    position: absolute;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 2;
+    border-radius: 6px 6px 0 0;
+    transition: left 0.5s ease-in-out;
+}
+
+.house_grid > div > h3{
+    box-sizing: border-box;
+    padding: 0 15px;
+    height: 2rem;
+}
+
+.house_grid > div > section{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding-left: 10px;
+    gap: 7px;
+}
+
+.house_grid > div > div{
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
+    color: white;
+    background: linear-gradient(90deg, rgba(255,165,0,1) 0%, rgba(255,165,0,1) 50%, rgba(255,165,0,0) 100%);
+}
+
+@media (width < 1400px){
+    .house_grid{
+        gap: 20px;
+    }
+
+    .houses{
+        padding-inline: 20px;
+    }
+}
+
+@media (width < 1250px){
+    .house_grid{
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (width < 950px){
+    .house_grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (width < 650px){
+    .house_grid{
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+    }
+}
+
+body:has(#edit_house_popup){
+    overflow: hidden;
+}
+
+#edit_house_popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#house_editing{
+    width: min(100%, 800px);
+    height: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 30px;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+}
+
+#house_editing::-webkit-scrollbar{
+    display: none;
+}
+
+#house_editing h1{
+    text-align: center;
+}
+
+#house_editing .house_editing__property{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#house_editing .house_editing__property span{
+    font-size: 1.2rem;
+    flex-basis: 200px;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+#house_editing .house_editing__property input{
+    flex-grow: 1;
+    flex-basis: 250px;
+}
+#house_editing .house_editing__property input{
+    font-size: 1rem;
+    height: 2rem;
+    border-radius: 5px;
+    border-style: solid;
+    box-sizing: border-box;
+    padding-inline: 5px;
+}
+
+#house_editing .house_editing__property input:focus{
+    outline-color: orange;
+    border-radius: 5px;
+}
+
+#house_editing .house_editing__property input:not(:placeholder-shown){
+    border-color: orange;
+    border-style: solid;
+}
+
+#house_editing__images{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#house_editing__images > div{
+    position: relative;
+    width: 100%;
+}
+
+#house_editing__images > div > img{
+    width: 100%;
+}
+
+#house_editing__images > div > button{
+    opacity: 0;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 70px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+#house_editing__images > div > img:hover +
+button, #house_editing__images > div > button:hover{
+    opacity: 1;
+}
+
+@media (width <= 700px){
+    #house_editing__images > div > button{
+        opacity: 1;
+    }
+}
+
+#house_editing__images > div > button > svg{
+    color: white;
+}
+
+#house_editing__submit{
+    margin-top: 20px;
+    width: 100%;
+    border: none;
+    font-size: 1.1rem;
+    padding: 10px 0;
+    background: rgba(62, 62, 62, 0.2);
+    cursor: pointer;
+    transition: background-color 0.1s ease-in,
+                color 0.1s ease-in;
+}
+
+#house_editing__submit:hover{
+    background-color: orange;
+    color: white;
+}

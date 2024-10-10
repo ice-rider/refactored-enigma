@@ -1,0 +1,40 @@
+header{
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px 20px;
+}
+
+header .header__title{
+    color: var(--white);
+    font-size: 2rem;
+    line-height: 70px;
+    padding-left: 20px;
+}
+
+header .header__login button{
+    background-color: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: background-color 0.1s ease-in;
+}
+
+header .header__login button:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header__username{
+    font-size: 1.2rem;
+    color: white;
+}
+
+.header__username::after{
+    content: '|';
+    padding-left: 20px;
+}
