@@ -1,12 +1,13 @@
 from flask import request
+from flask_jwt_extended import jwt_required
 
-from ..models.room import RoomModel
+from models.room import RoomModel
 from .utils import admin_access
 from .api import BaseResource
 
 
 class FlatListResource(BaseResource):
-    path = "/flats/list/<str:random>"
+    path = "/flat/list/<random>"
 
     def get(self, random: str):
         rooms = RoomModel.get_all()
@@ -16,7 +17,7 @@ class FlatListResource(BaseResource):
     
 
 class FlatResource(BaseResource):
-    path = "/flats/<int:id>"
+    path = "/flat/<int:id>"
 
     def get(self, id: int):
         room = RoomModel.get_by_url(id)
@@ -25,23 +26,25 @@ class FlatResource(BaseResource):
         }, 200
     
 
+    @jwt_required()
     @admin_access
     def patch(self, id: int):
         room = RoomModel.get_by_id(id)
         if not room:
             return {"message": "Flat not found"}, 404
 
-        room.update_database([{
+        room.update({
             "name": request.json["name"],
             "price": request.json["price"],
             "location": request.json["location"],
             "metrs": request.json["metrs"]
-        }])
+        })
         return {
             "flat": room.json()
         }, 200
     
 
+    @jwt_required()
     @admin_access
     def delete(self, id: int):
         room = RoomModel.get_by_id(id)

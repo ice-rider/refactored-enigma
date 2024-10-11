@@ -7,7 +7,6 @@ type LoginFormProps = {
     setUsername: React.Dispatch<React.SetStateAction<string>>
 }
 export default function RegisterForm(props: LoginFormProps) {
-
     return (
         <div className="inputs__group">
             <input

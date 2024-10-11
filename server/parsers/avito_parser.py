@@ -28,7 +28,7 @@ def parse():
                     "name": flat["title"],
                     "price": flat["priceDetailed"]["value"],
                     "location": flat["location"]["name"],
-                    "metrs": (lambda x: x[0] if x else None)([x for x in flat["title"].split(" ") if x and x[0].isdigit()]) or "...м",
+                    "metrs": (lambda x: x[0] if x else None)([x for x in flat["title"].split(" ") if x and x[0].isdigit() and x[1].isdigit()]) or "...м",
                     "image": [flat["images"][index]["864x864"] for index in random.choices(list(range(flat.get("imagesCount"))), k=3) if flat.get("imagesCount")] or ["https://www.qctonline.com/wp-content/uploads/qctonline_archives/not_found.png"] * 3,
                     "url": "https://www.avito.ru" + flat["urlPath"],
                     "source": "avito"

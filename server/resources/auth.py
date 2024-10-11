@@ -4,7 +4,7 @@ import random
 from flask import request
 from flask_jwt_extended import create_access_token
 
-from ..models import UserModel, CodeModel
+from models import UserModel, CodeModel
 from .api import BaseResource
 from .utils import send_email
 
@@ -13,7 +13,7 @@ class LoginResource(BaseResource):
     path = "/login"
 
     def post(self):
-        user = UserModel.authorize(request.json["email"], request.json["password"])
+        user = UserModel.authorize(request.json.get("email"), request.json.get("password"))
         if not user:
             return {"message": "User not found"}, 404
         access_token = create_access_token(identity=user.json())

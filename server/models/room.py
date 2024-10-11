@@ -24,8 +24,9 @@ class RoomModel(BaseModel):
         self.url = "__".join(url)
         self.source = source
 
-    def __init__(self, name: str):
-        self.name = name
+    @classmethod
+    def get_all(cls) -> list[RoomModel]:
+        return cls.query.all()
 
     def json(self):
         return {
@@ -34,8 +35,8 @@ class RoomModel(BaseModel):
             "price": self.price,
             "location": self.location,
             "metrs": self.metrs,
-            "image": self.image,
-            "url": self.urla.split("__"),
+            "image": self.image.split("__"),
+            "url": self.url,
             "source": self.source
         }
     
@@ -53,7 +54,7 @@ class RoomModel(BaseModel):
                 room.location = flat["location"]
                 room.metrs = flat["metrs"]
                 room.image = flat["image"]
-                room.url = "__".join(flat["url"])
+                room.url = (lambda imgs: f"{imgs[0]}__{imgs[1]}__{imgs[2]}")(flat["image"])
                 room.source = flat["source"]
             else:
                 new_room = cls(
@@ -61,8 +62,15 @@ class RoomModel(BaseModel):
                     price=flat["price"],
                     location=flat["location"],
                     metrs=flat["metrs"],
-                    image=flat["image"],
+                    image=(lambda imgs: f"{imgs[0]}__{imgs[1]}__{imgs[2]}")(flat["image"]),
                     url=flat["url"],
                     source=flat["source"]
                 )
                 new_room.save()
+
+    def update(self, data: dict):
+        self.name = data.get("name", self.name)
+        self.price = data.get("price", self.price)
+        self.location = data.get("location", self.location)
+        self.metrs = data.get("metrs", self.metrs)
+        self.save()

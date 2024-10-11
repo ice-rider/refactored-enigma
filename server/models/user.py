@@ -6,7 +6,6 @@ from typing import TypeAlias, Literal
 from passlib.hash import pbkdf2_sha256
 
 from .db import db, BaseModel
-from .code import CodeModel
 
 
 USER_ROLE: TypeAlias = Literal["admin", "user"]
@@ -23,15 +22,16 @@ class UserModel(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
-    password_hash = db.COlumn(db.String(87))
+    password_hash = db.Column(db.String(87))
     confirmed = db.Column(db.Boolean, default=False)
     code = db.relationship("CodeModel", backref="user", uselist=False)
     _role = db.Column(db.Enum(UserRole), default=UserRole.USER)
 
     def __init__(self, username: str, email: str, password: str, system: bool = False):
         conflict_user = self.get_by_email(email)
+        self.logger.info(conflict_user)
         if conflict_user:
-            raise Exception("User already registered")
+            raise Exception(f"User {conflict_user} already registered")
         password_hash: str = pbkdf2_sha256.hash(password)
         # set fields after validate
         self.username = username
@@ -52,12 +52,14 @@ class UserModel(BaseModel):
 
     @classmethod
     def get_by_email(cls, _email) -> UserModel | None:
-        return cls.query.filter_by(email=_email)
+        return cls.query.filter_by(email=_email).first()
     
     @classmethod
     def authorize(cls, _email: str, password: str) -> UserModel | None:
+        cls.logger.info("authorizing user: " + _email + " " + password)
         user: UserModel = cls.get_by_email(_email)
-
+        cls.logger.info(user)
+        
         if not user:
             return None
         
@@ -85,3 +87,6 @@ class UserModel(BaseModel):
                 self.role = _role
             except ValueError as e:
                 raise Exception(f"can't set user role={_role}") from e
+
+    def __repr__(self) -> str:
+        return f"<User {self.username}>"

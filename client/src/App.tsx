@@ -9,7 +9,7 @@ import axios from 'axios';
 
 function App() {
 
-  axios.defaults.baseURL = '/api'
+  axios.defaults.baseURL = 'https://turbo-cod-g9x9p46jjpr2v74g-5000.app.github.dev/api'
 
   return (
     <>

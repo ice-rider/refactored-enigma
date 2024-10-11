@@ -9,8 +9,8 @@ type LoginResponse = {
     access_token: string;
     user: {
         username: string;
+        role: 'admin' | 'user'
     };
-    role: 'admin' | 'user'
 }
 export default function Login() {
 
@@ -25,12 +25,12 @@ export default function Login() {
     const [step, setStep] = useState(0);
 
     function loginUser(){
-        axios.post(`/login`, {username, password})
+        axios.post(`/login`, {email, password})
         .then((response) => {
             const data : LoginResponse = response.data;
             const {access_token} = data;
             localStorage.setItem('username', data.user.username);
-            localStorage.setItem('role', data.role);
+            localStorage.setItem('role', data.user.role);
             axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             navigate('/')
         })
@@ -46,7 +46,7 @@ export default function Login() {
             const data : LoginResponse = response.data;
             const {access_token} = data;
             localStorage.setItem('username', data.user.username);
-            localStorage.setItem('role', data.role);
+            localStorage.setItem('role', data.user.role);
             axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             setStep(2)
         })
@@ -57,7 +57,7 @@ export default function Login() {
     }
 
     function confirmCode(){
-        axios.post(`/confirm`, {username, code})
+        axios.post(`/confirm`, {email, code})
         .then((response) => {
             navigate('/')
         })

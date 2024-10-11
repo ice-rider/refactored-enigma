@@ -26,7 +26,7 @@ export default function Grid(){
         axios.get(`/flat/list/abrakadabra`)
         .then(
           res => {
-            const fetched_data : HouseResponse[] = res.data;
+            const fetched_data : HouseResponse[] = res.data.flats;
             setData(fetched_data.filter(item => item.image !== null).map(item => (
                 {
                     title: item.name,

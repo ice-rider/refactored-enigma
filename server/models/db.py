@@ -1,8 +1,11 @@
+import random
+import string
+
 from flask_sqlalchemy import SQLAlchemy
-
 from flask.typing import AppOrBlueprintKey
+from passlib.hash import pbkdf2_sha256
 
-from .user import UserModel
+from .db_logger import logger as db_logger
 
 
 db = SQLAlchemy()
@@ -14,19 +17,20 @@ def init_app(app: AppOrBlueprintKey) -> None:
     db.init_app(app)
     with app.app_context():
         db.create_all()
+        password = "".join(random.choices(string.ascii_letters + string.digits, k=16))
 
+        from .user import UserModel
         superuser = UserModel(
-            username="admin",
-            email="admin",
-            password="admin",
-            system=True
+            "admin", "admin@email.com", password, system=True
         )
         superuser.save()
+        db_logger.info(f"Superuser created: \n\temail = admin@email.com; {password = }; username = admin")
         db_logger.info("Database initialized successfully")
 
 
 class BaseModel(db.Model):  # type: ignore
     __abstract__ = True
+    logger = db_logger
 
     def __str__(self) -> str:
         return str(self.json())
