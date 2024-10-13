@@ -10,4 +10,4 @@ COPY . /server
 
 EXPOSE 5000
 
-CMD ["flask", "run", "--host", "localhost", "--port", "5000"]
+CMD ["python", "main.py"]
