@@ -10,7 +10,7 @@ main{
 .house_grid{
     max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, calc((100% - 45px * 3) / 4));
     gap: 45px;
 }
 
@@ -79,6 +79,8 @@ main{
 @media (width < 1400px){
     .house_grid{
         gap: 20px;
+        grid-template-columns: repeat(4, calc((100% - 60px) / 4));
+
     }
 
     .houses{
@@ -88,14 +90,14 @@ main{
 
 @media (width < 1250px){
     .house_grid{
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, calc((100% - 40px) / 3));
         gap: 20px;
     }
 }
 
 @media (width < 950px){
     .house_grid{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, calc((100% - 20px) / 2));
         gap: 20px;
     }
 }

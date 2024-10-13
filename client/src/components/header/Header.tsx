@@ -11,6 +11,7 @@ export default function Header(){
 
     function logout(){
         localStorage.removeItem('username');
+        localStorage.removeItem('role');
         axios.defaults.headers.common['Authorization'] = '';
         navigate('/')
     }

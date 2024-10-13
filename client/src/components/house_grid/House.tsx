@@ -29,7 +29,7 @@ export default function House(props: Props & {onClick: () => void}) {
                 {props.images.map((image, index) => (
                     <img
                         key={index}
-                        src={image}
+                        src={image.includes('http') ? image : `https://www.qctonline.com/wp-content/uploads/qctonline_archives/not_found.png`}
                         alt={props.title}
                         className={index === currentImage ? 'current' : ''}
                         style={{'left': `${(-currentImage + index) * 100}%`}}
