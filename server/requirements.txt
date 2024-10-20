@@ -8,7 +8,7 @@ psycopg2-binary
 Flask-RESTful
 Flask-JWT-extended
 passlib
-
+cianparser
 confluent_kafka
-
+schedule
 gunicorn
