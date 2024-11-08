@@ -23,6 +23,8 @@ def parse():
         flats = []
         if process.returncode == 0:
             data = json.loads(stdout.decode())
+            if "status" in data and data["status"] == "too-many-requests":
+                return []
             for flat in data["items"]:
                 flats.append({
                     "name": flat["title"],
