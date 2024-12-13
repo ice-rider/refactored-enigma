@@ -27,7 +27,7 @@ export default function EditHouse(props: Props){
 
     return (
         <section id="house_editing">
-            <h1>Редактирование жилья</h1>
+            <h1>{props.editable ? 'Редактирование' : 'Просмотр'} жилья</h1>
             <div className="house_editing__property">
                 <span>
                     Название
