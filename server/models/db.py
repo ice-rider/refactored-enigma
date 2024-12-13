@@ -21,10 +21,10 @@ def init_app(app: AppOrBlueprintKey) -> None:
 
         from .user import UserModel
         superuser = UserModel(
-            "admin", "admin@email.com", password, system=True
+            "admin10", "admin10@email.com", password, system=True
         )
         superuser.save()
-        db_logger.info(f"Superuser created: \n\temail = admin@email.com; {password = }; username = admin")
+        db_logger.info(f"Superuser created: \n\temail = admin10@email.com; {password = }; username = admin10")
         db_logger.info("Database initialized successfully")
 
 

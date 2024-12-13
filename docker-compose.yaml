@@ -1,0 +1,16 @@
+services:
+  client:
+    container_name: client
+    build: ./client
+    restart: on-failure
+    ports:
+      - 3000:3000
+    command: serve -s build
+    depends_on:
+      - server
+  server:
+    build: ./server
+    restart: on-failure
+    ports:
+      - 5001:5001
+    command: python3 main.py
