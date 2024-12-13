@@ -1,5 +1,6 @@
 import string
 import random
+import json
 
 from flask import request
 from flask_jwt_extended import create_access_token
@@ -16,7 +17,7 @@ class LoginResource(BaseResource):
         user = UserModel.authorize(request.json.get("email"), request.json.get("password"))
         if not user:
             return {"message": "User not found"}, 404
-        access_token = create_access_token(identity=user.json())
+        access_token = create_access_token(identity= json.dumps(user.json()))
         return {
             "access_token": access_token,
             "user": user.json()
@@ -39,7 +40,7 @@ class RegisterResource(BaseResource):
         code = "".join(random.choices(string.ascii_digits, k=6))
         user.code = CodeModel(code, user.id).save()
 
-        access_token = create_access_token(identity=user.json())
+        access_token = create_access_token(identity=json.dumps(user.json()))
 
         send_email(email, username, code)
 

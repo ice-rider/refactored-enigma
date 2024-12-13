@@ -12,6 +12,7 @@ type HouseResponse = {
   "image": string[] | null | string,
   "url": string;
   "source": string;
+  "id": number
 }
 
 export default function Grid(){
@@ -35,7 +36,7 @@ export default function Grid(){
                     square: String(item.metrs),
                     images: (typeof item.image === 'string' ? [item.image] : item.image) as string[],
                     url: item.url,
-                    id: 2
+                    id: item.id
                 }
             )))
           }
@@ -73,9 +74,9 @@ export default function Grid(){
                 }
             </section>
             {
-              is_admin && popup_house_index !== -1 &&
+              popup_house_index !== -1 &&
               <div id='edit_house_popup' onClick={(e)=>{if(e.target === document.querySelector('#edit_house_popup')) set_popup_house_index(-1)}}>
-                <EditHouse {...data[popup_house_index]} onEdit={editHouse} />
+                <EditHouse {...data[popup_house_index]} onEdit={editHouse} editable={is_admin}/>
               </div>
             }
         </main>

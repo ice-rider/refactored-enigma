@@ -31,6 +31,7 @@ export default function Login() {
             const {access_token} = data;
             localStorage.setItem('username', data.user.username);
             localStorage.setItem('role', data.user.role);
+            localStorage.setItem('token', access_token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             navigate('/')
         })
@@ -47,6 +48,7 @@ export default function Login() {
             const {access_token} = data;
             localStorage.setItem('username', data.user.username);
             localStorage.setItem('role', data.user.role);
+            localStorage.setItem('token', access_token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             setStep(2)
         })

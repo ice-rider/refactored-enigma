@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import json
 
 from flask_jwt_extended import get_jwt_identity
 
@@ -46,6 +47,7 @@ def send_email(email, name, code):
 def admin_access(func):
     def wrapper(*args, **kwargs):
         user = get_jwt_identity()
+        user = json.loads(user)
         if user["role"] != "admin":
             return {"message": "Access denied"}, 403
         return func(*args, **kwargs)
@@ -55,6 +57,7 @@ def admin_access(func):
 def user_verified(func):
     def wrapper(*args, **kwargs):
         user = get_jwt_identity()
+        user = json.loads(user)
         if not user["verified"]:
             return {"message": "User not verified"}, 403
         return func(*args, **kwargs)

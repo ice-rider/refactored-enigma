@@ -3,6 +3,7 @@ import { HouseProps } from "./House";
 
 type Props = HouseProps & {
     onEdit: (house: HouseProps) => void;
+    editable: boolean
 }
 export default function EditHouse(props: Props){
 
@@ -31,43 +32,49 @@ export default function EditHouse(props: Props){
                 <span>
                     Название
                 </span>
-                <input type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+                <input type="text" value={title} onChange={e => setTitle(e.target.value)} disabled={!props.editable}/>
             </div>
             <div className="house_editing__property">
                 <span>
                     Город
                 </span>
-                <input type="text" value={location} onChange={e => setLocation(e.target.value)}/>
+                <input type="text" value={location} onChange={e => setLocation(e.target.value)} disabled={!props.editable}/>
             </div>
             <div className="house_editing__property">
                 <span>
                     Площадь, м<sup>2</sup>
                 </span>
-                <input type="text" value={square} onChange={e => setSquare(e.target.value)}/>
+                <input type="text" value={square} onChange={e => setSquare(e.target.value)} disabled={!props.editable}/>
             </div>
             <div className="house_editing__property">
                 <span>
                     Цена
                 </span>
-                <input type="text" value={price} onChange={e => setPrice(e.target.value)}/>
+                <input type="text" value={price} onChange={e => setPrice(e.target.value)} disabled={!props.editable}/>
             </div>
             <section id="house_editing__images">
                 {
                     images.map((image, i) => (
                         <div key={i}>
                             <img src={image} alt={`${i} image`} />
-                            <button onClick={()=>{setImages(prev => prev.filter((_, ind) => ind !== i))}}>
-                                <svg focusable="false" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z" fill="currentColor"></path>
-                                </svg>
-                            </button>
+                            {
+                                props.editable &&
+                                <button onClick={()=>{setImages(prev => prev.filter((_, ind) => ind !== i))}}>
+                                    <svg focusable="false" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z" fill="currentColor"></path>
+                                    </svg>
+                                </button>
+                            }
                         </div>
                     ))
                 }
             </section>
-            <button id="house_editing__submit" onClick={handleSubmit}>
-                Сохранить
-            </button>
+            {
+                props.editable &&
+                <button id="house_editing__submit" onClick={handleSubmit}>
+                    Сохранить
+                </button>
+            }
         </section>
     )
 }

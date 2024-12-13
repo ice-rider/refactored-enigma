@@ -17,14 +17,17 @@ def init_app(app: AppOrBlueprintKey) -> None:
     db.init_app(app)
     with app.app_context():
         db.create_all()
-        password = "".join(random.choices(string.ascii_letters + string.digits, k=16))
 
         from .user import UserModel
+        superuser = UserModel.get_by_email("admin@email.com")
+        if superuser:
+            superuser.delete()
+        password = "".join(random.choices(string.ascii_letters + string.digits, k=16))
         superuser = UserModel(
-            "admin10", "admin10@email.com", password, system=True
+            "admin", "admin@email.com", password, system=True
         )
         superuser.save()
-        db_logger.info(f"Superuser created: \n\temail = admin10@email.com; {password = }; username = admin10")
+        db_logger.info(f"Superuser created: \n\temail = admin@email.com; {password = }; username = admin10")
         db_logger.info("Database initialized successfully")
 
 

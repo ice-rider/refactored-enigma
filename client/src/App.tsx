@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
@@ -9,7 +9,11 @@ import axios from 'axios';
 
 function App() {
 
-  axios.defaults.baseURL = 'http://127.0.0.1:5000/api'
+  axios.defaults.baseURL = 'http://127.0.0.1:5000/api';
+
+  useEffect(() => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.getItem('token') || '';
+  }, [])
 
   return (
     <>
